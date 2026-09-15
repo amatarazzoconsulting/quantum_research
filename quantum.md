@@ -1536,3 +1536,239 @@ Let me now summarize the vocabulary of quantum computing hardware. This vocabula
 
 **Quantum computing hardware** spans multiple platforms, each with distinct strengths and challenges. **Superconducting qubits**, based on **Josephson junctions** and **transmon** designs, are the most mature, with IBM's **Condor** reaching 1,121 qubits and Google's **Willow** demonstrating **below-threshold** error correction, but they require **dilution refrigerators** operating at millikelvin temperatures. **Trapped-ion qubits**, exemplified by Quantinuum's **Helios** with 98 qubits and **all-to-all connectivity**, offer the highest **gate fidelities** (99.921%) but face scaling challenges. **Neutral-atom qubits**, using **optical tweezers** and **Rydberg blockade**, offer **atom rearrangement** for reconfigurable connectivity, with China's **Hanyuan 2** achieving 200 qubits at room temperature. **Photonic qubits**, enabled by **integrated photonics** and architectures like **Clavina**, operate at room temperature and are naturally suited for quantum networking. **Silicon spin qubits** leverage semiconductor manufacturing, with hole spin qubits achieving 99.8% single-qubit fidelity, while **topological qubits** based on **Majorana bound states** and **braiding** promise inherent error protection but remain unproven. **Quantum error correction**, particularly the **surface code**, is essential for **fault-tolerant quantum computing**, with **logical qubits** encoded across multiple **physical qubits** and **threshold theorems** governing scalability, though **error mitigation** techniques extend the capabilities of **NISQ**-era devices. The **quantum compiler** and **QNodeOS** form the software stack that makes quantum computers usable, while metrics like **quantum volume**, **quantum advantage**, and **quantum utility** measure progress toward practical quantum computing.
 
+
+
+# Chapter 4: Quantum Communication and Quantum Networks — From Entangled Photons to a Global Quantum Internet
+
+## Part I: Why Quantum Communication Is Different
+
+Let me begin with a question that sounds like science fiction but is now the subject of serious engineering. What if you could send a message that is impossible to intercept without being detected? Not just difficult to intercept—impossible. What if the act of eavesdropping itself destroyed the message, so that you would know immediately that someone was listening? This is the promise of quantum communication, and it is not a distant dream. It is happening today, in laboratories and in orbit, and it is being tested over distances of thousands of kilometers.
+
+Classical communication is the basis for nearly everything in modern life. Your phone calls, your video conferences, your emails, your banking transactions—all of them travel as classical bits, as zeros and ones, through optical fibers and radio waves and satellite links. Classical bits can be copied. They can be amplified. They can be intercepted and read without the sender or receiver knowing. This is not a flaw in the design of classical communication. It is a fundamental property of classical information. A classical bit is a classical bit, and anyone who has access to it can read it.
+
+Quantum communication is governed by different rules. Quantum information is encoded in quantum states—in the polarization of a photon, the phase of a laser pulse, the spin of an electron. These states have properties that classical bits do not have. They cannot be copied, because of the no-cloning theorem. They cannot be measured without disturbing them. And when two quantum systems are entangled, measuring one instantly determines the state of the other, regardless of distance. These properties, which seem like obstacles in everyday life, become powerful tools in quantum communication.
+
+The most mature application of quantum communication is quantum key distribution, or QKD. The idea is simple. Alice and Bob want to establish a shared secret key that they can use to encrypt and decrypt messages. In classical cryptography, this key exchange is vulnerable to interception. In quantum key distribution, Alice sends Bob a series of quantum states—typically photons with specific polarizations. Bob measures them. An eavesdropper, Eve, who tries to intercept the photons will disturb their quantum states and introduce errors that Alice and Bob can detect. If the error rate is low enough, Alice and Bob know that no eavesdropper was present, and they can use the key. If the error rate is high, they discard the key and try again.
+
+This is not just a theoretical idea. QKD systems are commercially available. They are used in banking, in government communications, and in critical infrastructure. In 2026, researchers demonstrated GHz-class polarization QKD systems with 1.5 GHz repetition rates, 0.4% intrinsic quantum bit error rates, and 1 megabit per second sustained key rates over free space. Under low-Earth-orbit satellite scenarios with 38.5 decibels of loss, key rates of 6.5 kilobits per second were achieved. These are not laboratory curiosities. They are engineering achievements that are moving quantum communication from the laboratory to the field.
+
+Let me give you a worked example of how QKD works using the BB84 protocol, the first and most famous quantum key distribution protocol. Alice wants to send Bob a key. She generates a random sequence of bits—say, 0 1 1 0 1 0. For each bit, she randomly chooses one of two bases: the rectilinear basis (horizontal/vertical polarization) or the diagonal basis (45-degree/135-degree polarization). She encodes each bit in a photon polarization using the chosen basis. For example, in the rectilinear basis, 0 might be horizontal and 1 might be vertical. In the diagonal basis, 0 might be 45 degrees and 1 might be 135 degrees.
+
+Alice sends the photons to Bob. Bob does not know which basis Alice used for each photon. He randomly chooses a basis for each measurement, either rectilinear or diagonal. If he chooses the same basis as Alice, he gets the correct bit. If he chooses the wrong basis, he gets a random result. After transmitting all the photons, Alice and Bob publicly announce which bases they used for each photon. They keep only the bits where they used the same basis. These bits form the sifted key. They then compare a subset of the sifted key to check for eavesdropping. If the error rate is below a threshold, they proceed to error correction and privacy amplification to produce a final secret key.
+
+The security of BB84 comes from the fact that an eavesdropper cannot copy the photon states without introducing errors. If Eve measures a photon to learn its polarization, she disturbs it. If she tries to copy it, the no-cloning theorem prevents her. Alice and Bob can detect her presence by the elevated error rate. This is the essential insight of quantum cryptography: eavesdropping is detectable.
+
+In 2026, the field of quantum communication has advanced far beyond BB84. A comprehensive review published in early 2026 describes the specific properties of quantum information networks, including the interfaces between the classical and quantum regimes, the transmission of quantum information by physical implementations, and potential future applications of quantum networks . The review notes that quantum networks enable forms of nonlocality beyond the standard Bell scenario, with a multitude of potential applications . One recent development is unidimensional Gaussian-modulated continuous-variable QKD protocols, which have been proposed as a way to simplify implementation and reduce costs through single-quadrature measurement .
+
+## Part II: Quantum Teleportation — The Protocol That Moves Quantum States
+
+In Chapter 2, we introduced quantum teleportation as a protocol for transferring an unknown quantum state using entanglement and classical communication. Now let me tell you how teleportation fits into the broader picture of quantum communication and quantum networks.
+
+Teleportation is not a replacement for QKD. It is a building block for quantum networks. A quantum network is a network of quantum devices—quantum computers, quantum sensors, quantum memories—connected by quantum channels. To connect these devices, you need to move quantum states from one device to another. Teleportation is the protocol that does this. It allows a quantum state to be transferred from one node to another without physically moving the particle that carries it.
+
+The key resource for teleportation is entanglement. Two nodes in a quantum network must share entangled qubits before teleportation can occur. Distributing entanglement over long distances is challenging because entanglement is fragile. Photons lose coherence as they travel through optical fibers. Quantum memories have limited coherence times. To extend entanglement over long distances, quantum networks use quantum repeaters.
+
+A quantum repeater divides a long distance into shorter segments. Within each segment, entanglement is created between adjacent nodes. Then, entanglement swapping is used to extend the entanglement across the entire distance. Entanglement swapping is a protocol that takes two entangled pairs—one between node A and node B, and one between node B and node C—and creates entanglement between A and C, even though A and C have never interacted. This is possible because of the nonlocal properties of entanglement.
+
+In 2025, researchers demonstrated teleportation over a thermal microwave network, distributing continuous-variable entanglement between two spatially separated dilution refrigerators. IBM researchers demonstrated teleportation and entanglement swapping of continuous quantum variables of microwave radiation, achieving 73% accuracy for teleporting a microwave signal. At TU Delft, researchers demonstrated quantum teleportation of a photonic time-bin qubit to the communication qubit of an NV center platform, establishing the primary form of communication between heterogeneous platforms in a quantum network.
+
+These experiments show that teleportation is not just a theoretical curiosity. It is a practical tool for connecting different types of quantum devices. In a future quantum internet, teleportation will be the protocol that moves quantum information from one node to another, just as classical routers move classical bits from one computer to another.
+
+## Part III: Quantum Networks and the Quantum Internet
+
+A quantum network is more than just a collection of quantum devices connected by fibers. It is a new kind of infrastructure that enables applications impossible with classical networks. The review published in 2026 describes quantum networks as enabling "forms of nonlocality beyond the standard Bell scenario, with a multitude of potential applications" . These applications include secure communication, distributed quantum computation, and enhanced quantum sensing.
+
+One of the most promising applications of quantum networks is distributed quantum sensing. Imagine a network of atomic clocks connected by quantum channels. The clocks can be synchronized with precision limited only by quantum mechanics, not by classical noise. This would enable unprecedented accuracy in timekeeping, with applications in navigation, geodesy, and fundamental physics. A 2026 review of multiparameter quantum sensing describes how "quantum networks of atomic clocks enhance precision measurements over large distances, enabling unprecedented synchronization and stability" .
+
+Another application is distributed quantum computation. A quantum computer with a million qubits is difficult to build as a single monolithic device. But a network of smaller quantum computers, connected by quantum channels, could work together as a single larger computer. Quantum teleportation would move quantum states between the nodes, and entanglement would provide the correlations needed for distributed algorithms.
+
+The quantum internet is the ultimate vision of quantum networking. It would be a global network of quantum devices, connected by quantum channels, enabling secure communication, distributed computation, and enhanced sensing anywhere on Earth. The review published in 2026 aims to provide "a starting point based on fundamental concepts of quantum information processing for further research on a future quantum internet" . This is a field in its infancy, but the building blocks are being assembled.
+
+In 2026, researchers demonstrated the first operating system for quantum network applications, QNodeOS, which can schedule and manage quantum network applications in a multitasking fashion. This is a significant milestone. It means that quantum networks are moving from laboratory demonstrations to operational systems. Just as classical computers needed operating systems to become useful, quantum networks need operating systems to manage resources and run applications.
+
+The challenges for quantum networks are formidable. Quantum signals are fragile. They cannot be amplified like classical signals, because amplification would destroy the quantum state. They cannot be copied, because of the no-cloning theorem. They must be transmitted with low loss, stored in quantum memories with long coherence times, and processed with high fidelity. Each of these requirements is a significant engineering challenge. But the progress in the last decade has been remarkable, and the path to a quantum internet is becoming clearer.
+
+## Part IV: Quantum Sensing and Metrology — Measuring with Quantum Precision
+
+Let me now turn to quantum sensing, which is perhaps the most mature application of quantum technology. Quantum sensors use quantum effects to measure physical quantities with precision far beyond what classical sensors can achieve. They exploit superposition, entanglement, and tunneling to detect tiny changes in magnetic fields, electric fields, gravity, and time.
+
+The foundations of quantum sensing lie in quantum metrology, the science of precision measurement using quantum effects. A comprehensive review published in 2026 describes the field as encompassing "theoretical foundations, cutting-edge techniques, practical applications, experimental progress, emerging technologies, and more" . The review covers the fundamentals of classical parameter estimation theory, the rigorous mathematical framework for quantum estimation, and the modern techniques designed to enhance sensitivity in parameter estimation.
+
+The key concept in quantum metrology is the quantum Cramér-Rao bound, which sets the ultimate limit on how precisely a parameter can be estimated. In classical metrology, the precision improves as the square root of the number of measurements or particles. This is called the standard quantum limit, scaling as 1/√N. In quantum metrology, by using entangled states, the precision can improve as 1/N, which is called the Heisenberg limit. For large N, the Heisenberg limit is much better than the standard quantum limit. For example, with 100 particles, the standard quantum limit gives a precision of 1/10, while the Heisenberg limit gives 1/100—a factor of 10 improvement.
+
+Let me give you a concrete example. Suppose you want to measure a magnetic field. A classical magnetometer uses many independent atoms, each measuring the field independently. The precision improves as 1/√N, where N is the number of atoms. A quantum magnetometer uses entangled atoms, which are correlated in such a way that the precision improves as 1/N. With 1,000 atoms, the classical magnetometer achieves a precision of about 1/31.6, while the quantum magnetometer achieves 1/1,000—a 31-fold improvement. This is a significant advantage for applications like navigation, medical imaging, and fundamental physics.
+
+A 2026 review of multiparameter quantum sensing describes recent progress in simultaneously estimating several parameters of interest. This is driven by "its promising potential across a wide range of sensing applications as well as fueled by experimental progress in various optical and atomic platforms" . The review highlights that "quantum resources—such as entanglement and squeezing—can reduce the impact of quantum noise and thus enhance the performance of multiparameter estimation beyond what is possible using independent sensors and particles" . However, it also notes that "the intrinsic incompatibility inherent in quantum mechanics, coupled with the curse of dimensionality, renders the identification of optimal protocols and sensitivity bounds far richer and more challenging than in the single-parameter scenario" .
+
+The applications of quantum sensing are broad. Atomic clocks use quantum transitions to keep time with unprecedented precision. They are used in GPS satellites, in financial trading networks, and in fundamental physics experiments. Quantum magnetometers based on nitrogen-vacancy centers in diamond can detect magnetic fields at the nanoscale, with applications in materials science, biology, and navigation. Quantum gravimeters based on cold atoms can detect underground structures and mineral deposits. Quantum imaging can see through obstacles that are opaque to classical light.
+
+In 2026, quantum sensing is moving from the laboratory to the field. Quantum sensors are being deployed in medical diagnostics, environmental monitoring, and defense applications. A quantum sensor developed by CSIRO and the University of Melbourne can detect serum ferritin, enabling rapid iron deficiency diagnosis. Quantum gravimeters are being tested for mineral exploration and underground infrastructure mapping. Quantum magnetometers are being used to detect submarines and underground bunkers. These are not laboratory demonstrations. They are field deployments.
+
+## Part V: The Quantum-AI Convergence — A New Paradigm
+
+Let me now turn to one of the most exciting and controversial frontiers in quantum technology: the convergence of quantum computing and artificial intelligence. This is not just about using quantum computers to run machine learning algorithms faster. It is about a fundamentally new paradigm for computation that combines the strengths of both fields.
+
+A 2026 tutorial published in IEEE Circuits and Systems Magazine describes Quantum Artificial Intelligence (QAI) as "the convergence of quantum computing and machine learning, aiming to harness the computational power of quantum mechanics to enhance the efficiency, scalability, and generalization capability of intelligent systems" . The article reviews the core concepts of quantum information and hybrid quantum–classical computing, followed by a detailed discussion of variational quantum circuits (VQCs)—the fundamental building blocks of quantum neural networks (QNNs) .
+
+The basic idea of quantum machine learning is to use quantum circuits as the building blocks of neural networks. A classical neural network consists of layers of artificial neurons, each performing a weighted sum of inputs followed by a nonlinear activation function. A quantum neural network uses quantum gates instead of classical neurons, and quantum states instead of classical activations. The quantum circuit can represent correlations and superpositions that classical neural networks cannot represent efficiently. This could lead to more expressive models with fewer parameters.
+
+The IEEE tutorial describes representative QAI architectures, including "Quantum Convolutional Neural Networks (QCNNs) for pattern recognition, Quantum Long Short-Term Memory (QLSTM) for sequential modeling, and Quantum Reinforcement Learning (QRL) for decision making and control" . Advanced topics such as "Quantum Architecture Search (QAS), Quantum Fast Weight Programmers (QFWP), and the Quantum-Train (QT) framework are presented to illustrate how classical and quantum models can dynamically co-design and reprogram one another" .
+
+One of the most promising applications of quantum machine learning is molecular property prediction. A 2026 paper published in IEEE Xplore presents "a comprehensive hybrid quantum-classical architecture that synergistically combines a Bidirectional Long Short-Term Memory (BiLSTM) network with a variational quantum circuit (VQC) to perform multi-task regression on molecular properties" . The system introduces "a novel quantum feature layer, implemented in PennyLane and integrated with PyTorch, which employs data reuploading and configurable entanglement patterns (linear, full, pairwise) to generate expressive quantum descriptors" . The hybrid model "consistently outperforms a strong classical BiLSTM baseline, achieving an R² of up to 0.94 on QM9 and reducing inference time to seconds per molecule" .
+
+This is significant because molecular property prediction is a cornerstone of drug discovery. Traditional computational methods face a trade-off between accuracy and speed. Density functional theory (DFT) provides high accuracy but is computationally prohibitive for high-throughput screening, requiring hours to days per molecule . The hybrid quantum-classical approach offers a way to achieve high accuracy with fast inference times. This could accelerate drug discovery by enabling virtual screening of millions of candidate molecules in a fraction of the time.
+
+The convergence of quantum computing and AI also raises profound governance questions. In June 2026, the Parliamentary Assembly of the Council of Europe issued a motion for a resolution titled "Quantum technologies and artificial intelligence: the need for a European anticipation and governance strategy" . The motion states that "the quantum computing revolution is no longer a long-term hypothesis. In 2026, quantum processors are beginning to outperform classical systems in strategic domains, and their convergence with artificial intelligence opens an era of unprecedented computational power—with transformative implications for security, health, economy, democratic governance and digital sovereignty" . The motion calls for a report examining "the implications of the quantum-AI convergence for human rights, democracy and the rule of law" and "the measures member States should take to ensure a transition to post-quantum cryptography while preserving democratic standards and fundamental rights" .
+
+This is a recognition that quantum technology is not just a scientific curiosity. It is a strategic technology with profound implications for society. The "steal now, decrypt later" threat—where malicious actors harvest encrypted data today for future quantum decryption—already endangers critical infrastructure and sensitive public data . The convergence of quantum computing and AI amplifies these risks. Governance frameworks are needed to ensure that quantum technology is developed and deployed in ways that protect human rights and democratic values.
+
+## Part VI: Quantum-Inspired Optimization — Classical Computing with Quantum Ideas
+
+Not every problem requires a quantum computer. Some problems can be solved more efficiently using classical computers that are inspired by quantum algorithms. This is the domain of quantum-inspired optimization, and it is one of the most commercially successful applications of quantum ideas.
+
+Toshiba's SQBM+ is a quantum-inspired optimization solver based on the Simulated Bifurcation Machine. In June 2026, Toshiba announced SQBM+ Version 2.2, which supports up to 1 billion variables, positioning it among the largest and most powerful solvers currently available . The solver runs on classical computers and quickly finds high-quality approximate solutions to complex, large-scale problems . Potential applications include "large-scale portfolio optimization in financial markets, real-time nationwide logistics optimization, and complex design challenges in drug investigation, such as mRNA vaccine design" .
+
+This is a significant achievement. One billion variables is a scale that would be impossible for a quantum computer to handle today. But quantum-inspired algorithms can handle it on classical hardware. The key insight is that quantum algorithms often provide inspiration for classical algorithms that capture some of the same advantages without requiring quantum hardware. Simulated bifurcation, for example, is a classical algorithm that mimics the dynamics of a quantum system to solve combinatorial optimization problems.
+
+Toshiba has applied SQBM+ across a diverse range of fields, including finance, drug discovery, logistics, energy management, and materials development. Applications explored to date include "financial market trading verification, new equity index development, computational drug discovery, and factory warehouse logistics optimization" . This shows that quantum-inspired optimization is not just a theoretical curiosity. It is a practical tool with real-world applications.
+
+The success of quantum-inspired optimization raises an important question: do we need quantum computers at all? The answer is nuanced. For some problems, quantum-inspired classical algorithms may be sufficient. For others, true quantum advantage may require quantum hardware. The boundary between classical and quantum advantage is constantly shifting as both classical and quantum algorithms improve. This is one of the most active areas of research in quantum computing.
+
+## Part VII: Early Fault-Tolerant Quantum Computing — The Next Milestone
+
+The ultimate goal of quantum computing is fault-tolerant quantum computing—quantum computers with error correction that can run arbitrarily long algorithms without errors. But fault-tolerant quantum computing requires millions of physical qubits, and we are not there yet. In the meantime, researchers are developing techniques for "early fault-tolerant quantum computing" (early-FTQC)—quantum computers with modest error correction that can solve useful problems.
+
+In March 2026, Fujitsu and the University of Osaka announced new technologies for chemical material energy calculations on early-FTQC quantum computers . The technology combines "ver. 3 of the STAR architecture, a unique highly efficient phase rotation gate quantum computing architecture, with a novel molecular model optimization technique" to significantly reduce computational resource requirements . This breakthrough "will enable the energy calculations for chemical material design such as catalyst molecules, within a realistic timeframe using early-FTQC quantum computers" .
+
+The results are impressive. The STAR architecture ver. 3 "reduces the number of qubits necessary to perform the calculations to between 1/15 and 1/80 of conventional FTQC architectures" . Furthermore, "calculations are feasible on early-FTQC quantum computers even with a lowered physical error rate requirement for qubits, from the previous 0.01% to 0.10%" . The molecular model optimization technology "shortened computation time by three orders of magnitude compared to not using the technology" . Computation times could be "approximately 35 days with a qubit error rate of 0.10% and approximately 10 days with 0.01%" .
+
+This is significant because it shows that early-FTQC quantum computers can solve problems that are currently infeasible on classical computers. The molecules studied—Cytochrome P450 (an important oxidizing enzyme in drug discovery), iron-sulfur clusters (catalytic proteins involved in ammonia synthesis and energy metabolism), and ruthenium catalysts (a focus in synthetic chemistry)—are of practical importance . Accurate energy calculations for these molecules are currently infeasible with classical computers due to memory limitations . The Fujitsu-Osaka technology brings these calculations within reach.
+
+The applications of early-FTQC are broad. In drug discovery, accurate energy calculations can accelerate the identification of drug candidates. In materials science, they can guide the design of better catalysts and batteries. In energy, they can improve the efficiency of ammonia synthesis, which is essential for fertilizer production and a major consumer of energy. These are not abstract benefits. They are concrete improvements to technologies that affect millions of lives.
+
+## Part VIII: The Global Quantum Ecosystem — Companies, Institutions, and People
+
+Let me now give you a sense of the global quantum ecosystem. Quantum technology is no longer a purely academic pursuit. It is an industry, with companies, investors, and customers. A 2026 report from Future Markets profiles 313 quantum technology companies organized into five categories: Quantum Computing (117 companies), Quantum Hardware (50 companies), Quantum Software (48 companies), Quantum Sensing (26 companies), and Quantum Communications & Security (72 companies) .
+
+The report notes that the quantum sector has "matured from a publicly funded research frontier into a public-market industry with mainstream institutional participation" . The defining theme of 2026 is "the opening of public capital markets to quantum pure-plays, with Infleqtion, IQM, Xanadu and Pasqal moving toward public listings in early 2026 and Quantinuum filing for a potential US$20 billion IPO" . This is a significant milestone. It means that quantum technology is becoming a mainstream investment category, with public markets providing capital for growth.
+
+The ecosystem includes companies at every layer of the stack. Component and control companies supply the cryogenics, wiring, electronics, and detectors that every hardware platform needs. Bluefors, a Finnish company, is the market leader in dilution refrigerators, founded in 2008 by Rob Blaauwgeers from the Low Temperature Laboratory at Aalto University . Zurich Instruments, a Swiss manufacturer, builds lock-in amplifiers, signal generators, and analyzers used by leading hardware companies and research labs worldwide . Qblox, a Dutch company founded in 2018 from QuTech (TU Delft/TNO), builds scalable qubit control electronics designed specifically for large-scale quantum computers . These companies form the supply chain that makes quantum computing possible.
+
+Software, cloud, and error-correction companies build the compilers, control stacks, and applications that turn hardware into usable systems. QunaSys, a Tokyo-based company, develops quantum computing algorithms for chemistry and materials science . Qedma, an Israeli company, develops quantum error mitigation software that enables quantum circuits up to 1,000 times larger to run accurately on today's noisy hardware . Classiq, another Israeli company, provides a high-level quantum circuit design platform that lets developers specify computational intent rather than gate-level implementation . Riverlane, a UK company, is building the operating system for fault-tolerant quantum computing, focused entirely on error correction .
+
+The academic ecosystem is equally vibrant. A 2026 survey of the quantum software engineering ecosystem lists universities and research centers around the world, including the University of British Columbia, EPFL, the University of Cambridge, the University of Oxford, the University of Chicago, Delft University of Technology, Osaka University, and many others . These institutions are training the next generation of quantum scientists and engineers, conducting fundamental research, and collaborating with industry partners.
+
+In Japan, RIKEN is a major player. RIKEN and Fujitsu have contributed to the development of domestically produced quantum computers since 2023 . RIKEN's RQC (RIKEN Center for Quantum Computing) is working to improve the precision of qubit chips and the fidelity of qubits . In October 2025, Hitachi, RIKEN, and imec announced a memorandum of understanding to advance the development of silicon quantum computers . RIKEN also owns multiple quantum computers, including an ion-trap quantum computer from Quantinuum named "Reimei," as well as IBM's superconducting quantum computer .
+
+AIST's Global Research and Development Center for Business by Quantum-AI Technology (G-QuAT) is another important institution. G-QuAT "promotes industry-led support for the industrialization of quantum technology, as well as the strategic expansion of collaboration with companies and research institutions worldwide" . It is equipped with cutting-edge research facilities, including the Quantum-Classical Hybrid Computing Infrastructure (ABCI-Q), the Superconducting Quantum Circuit Fabrication Facility (Qufab), and Testbed for Quantum Computing Components (Qubed) . ABCI-Q integrates multiple quantum computing systems, including Fujitsu's superconducting quantum computer, a neutral-atom quantum computer from QuEra of the United States, and an optical quantum computer developed by OptQC, a Japanese quantum startup .
+
+This global ecosystem is a testament to the maturity of quantum technology. It is no longer a field of isolated researchers. It is a global industry, with supply chains, customers, investors, and competitors. The companies and institutions that make up this ecosystem are the ones that will bring quantum technology from the laboratory to the world.
+
+## Part IX: Building the Terminology of Quantum Communication and Networks
+
+Let me now summarize the vocabulary of quantum communication and networks. This vocabulary is essential for understanding the technical literature and following the field's progress.
+
+**Quantum Communication**: The transmission of quantum states between distant locations. Unlike classical communication, quantum communication cannot copy or amplify signals without destroying them.
+
+**Quantum Key Distribution (QKD)**: A method for establishing a shared secret key between two parties using quantum mechanics. The BB84 protocol is the most famous example.
+
+**BB84 Protocol**: The first quantum key distribution protocol, proposed by Bennett and Brassard in 1984. It uses polarized photons to encode bits in two bases.
+
+**Sifting**: The process in QKD where Alice and Bob publicly compare which bases they used and keep only the bits where they used the same basis.
+
+**Privacy Amplification**: A technique for reducing the information an eavesdropper might have about a key.
+
+**Continuous-Variable QKD**: A QKD protocol that uses continuous variables, such as the amplitude and phase of coherent states, instead of discrete photon polarizations.
+
+**Unidimensional QKD**: A QKD protocol that uses only one quadrature of the electromagnetic field, simplifying implementation.
+
+**Quantum Repeater**: A device that extends the range of quantum communication by dividing the distance into segments, creating entanglement within each segment, and using entanglement swapping to extend the entanglement.
+
+**Entanglement Swapping**: A protocol that creates entanglement between previously unentangled particles. It is the key operation in quantum repeaters.
+
+**Quantum Memory**: A device that stores quantum states for later use.
+
+**Quantum Transducer**: A device that converts quantum information between different physical platforms.
+
+**Microwave-to-Optical Transduction**: Converting quantum information from microwave to optical frequencies, essential for connecting superconducting qubits to optical fiber networks.
+
+**Quantum Network**: A network of quantum devices connected by quantum channels.
+
+**Quantum Internet**: A global quantum network.
+
+**QNodeOS**: The first operating system for quantum network applications, demonstrated in 2026.
+
+**Quantum Router**: A device that routes quantum information in a quantum network.
+
+**Quantum Satellite**: A satellite that performs quantum communication experiments.
+
+**Micius**: A Chinese quantum satellite that demonstrated quantum key distribution and quantum teleportation over satellite distances.
+
+**QEYSSat**: A Canadian quantum satellite mission for quantum key distribution.
+
+**Quantum Metrology**: The science of precision measurement using quantum effects.
+
+**Quantum Sensing**: Using quantum effects to measure physical quantities with unprecedented precision.
+
+**Standard Quantum Limit**: The precision limit for classical measurements, scaling as 1/√N.
+
+**Heisenberg Limit**: The ultimate precision limit in quantum metrology, scaling as 1/N.
+
+**Quantum Cramér-Rao Bound**: The ultimate limit on how precisely a parameter can be estimated using quantum measurements.
+
+**Multiparameter Quantum Sensing**: The simultaneous estimation of several parameters using quantum resources.
+
+**Quantum Incompatibility**: The intrinsic limitation in quantum mechanics that prevents simultaneous optimal estimation of incompatible parameters.
+
+**Squeezed Light**: Light with reduced quantum noise in one quadrature, used to enhance interferometer sensitivity.
+
+**Atomic Clock**: A clock based on atomic transitions.
+
+**Optical Clock**: An atomic clock based on optical transitions, more precise than microwave clocks.
+
+**Quantum Magnetometer**: A magnetometer based on quantum effects.
+
+**NV Center Magnetometer**: A magnetometer based on nitrogen-vacancy centers in diamond.
+
+**Quantum Gravimeter**: A gravimeter based on cold atoms.
+
+**Quantum Imaging**: Imaging using quantum effects.
+
+**Ghost Imaging**: An imaging technique that uses entangled photons.
+
+**Quantum Illumination**: A technique for detecting objects using entangled photons.
+
+**Quantum Artificial Intelligence (QAI)**: The convergence of quantum computing and machine learning.
+
+**Variational Quantum Circuit (VQC)**: A quantum circuit with parameterized gates, used as the building block of quantum neural networks.
+
+**Quantum Neural Network (QNN)**: A neural network implemented on a quantum computer.
+
+**Quantum Convolutional Neural Network (QCNN)**: A quantum neural network for pattern recognition.
+
+**Quantum Long Short-Term Memory (QLSTM)**: A quantum neural network for sequential modeling.
+
+**Quantum Reinforcement Learning (QRL)**: Reinforcement learning using quantum computers.
+
+**Quantum Architecture Search (QAS)**: Automatically searching for optimal quantum circuit architectures.
+
+**Barren Plateaus**: A phenomenon in quantum machine learning where gradients vanish, making training difficult.
+
+**Hybrid Quantum-Classical Neural Network**: A neural network that combines classical and quantum layers.
+
+**Quantum-Inspired Optimization**: Classical optimization algorithms inspired by quantum algorithms.
+
+**Simulated Bifurcation Machine**: A classical optimization solver based on the simulated bifurcation algorithm, developed by Toshiba.
+
+**Early Fault-Tolerant Quantum Computing (Early-FTQC)**: Quantum computing with modest error correction that can solve useful problems.
+
+**STAR Architecture**: A quantum computing architecture using phase rotation gates, developed by Fujitsu and the University of Osaka.
+
+**Molecular Model Optimization**: A technique for reducing the computational resources required for molecular energy calculations on quantum computers.
+
+---
+
+## Chapter 4 Summary: All Concepts and Terms in Brief
+
+**Quantum communication** transmits quantum states between distant locations, offering security and precision beyond classical communication. **Quantum Key Distribution (QKD)**, exemplified by the **BB84 protocol**, enables secure key exchange that detects eavesdropping through the **no-cloning theorem**. Recent advances include **continuous-variable QKD**, **unidimensional QKD**, and GHz-class systems with 1.5 GHz repetition rates and 1 Mb/s key rates. **Quantum teleportation** moves quantum states using **entanglement** and **classical communication**, enabling **quantum networks** that connect **quantum computers**, **quantum sensors**, and **quantum memories**. **Quantum repeaters** and **entanglement swapping** extend entanglement over long distances, while **QNodeOS** provides the first operating system for quantum network applications. **Quantum metrology** and **quantum sensing** use **entanglement** and **squeezing** to achieve precision beyond the **standard quantum limit**, approaching the **Heisenberg limit** and the **quantum Cramér-Rao bound**. Applications include **atomic clocks**, **quantum magnetometers** using **NV centers**, **quantum gravimeters**, and **quantum imaging**. **Quantum Artificial Intelligence (QAI)** combines quantum computing with machine learning, using **variational quantum circuits (VQCs)** as the building blocks of **quantum neural networks (QNNs)**, including **Quantum Convolutional Neural Networks (QCNNs)**, **Quantum Long Short-Term Memory (QLSTM)**, and **Quantum Reinforcement Learning (QRL)**. **Hybrid quantum-classical neural networks** achieve high accuracy in **molecular property prediction**, accelerating drug discovery. **Quantum-inspired optimization**, such as Toshiba's **SQBM+** **Simulated Bifurcation Machine**, solves optimization problems with up to 1 billion variables on classical hardware. **Early Fault-Tolerant Quantum Computing (Early-FTQC)** with architectures like **STAR** enables **molecular energy calculations** for drug discovery and materials science, reducing qubit requirements by factors of 15 to 80 and computation times to days. The global quantum ecosystem includes **313 companies** across computing, hardware, software, sensing, and communications, with major institutions like **RIKEN**, **AIST G-QuAT**, and universities worldwide driving innovation. The vocabulary of quantum communication and networks includes **quantum repeaters**, **entanglement swapping**, **quantum memories**, **transducers**, **microwave-to-optical transduction**, **quantum routers**, **quantum satellites**, **Micius**, **QEYSSat**, **multiparameter quantum sensing**, **quantum incompatibility**, **squeezed light**, **optical clocks**, **quantum illumination**, **barren plateaus**, **quantum architecture search**, **molecular model optimization**, and many more—a rich vocabulary that connects the microscopic quantum world to the macroscopic technologies that will define the next era of communication, sensing, and computation.
+
